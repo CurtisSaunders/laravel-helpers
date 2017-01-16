@@ -1,0 +1,32 @@
+{
+	"name": "curtissaunders/laravel-helpers",
+	"description": "A series of helper functions for Laravel 5",
+	"keywords": [
+		"helpers",
+		"laravel"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Curtis Saunders",
+			"email": "cgsaunders97@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.5.9",
+		"laravel/framework": "5.*"
+	},
+	"require-dev": {},
+	"autoload": {
+		"psr-4": {
+			"CurtisSaunders\\Laravel-Helpers\\": "src/"
+		}
+	},
+	"extra": {
+		"component": "package",
+		"frameworks": [
+			"Laravel 5"
+		]
+	},
+	"minimum-stability": "stable"
+}

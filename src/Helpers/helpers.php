@@ -8,6 +8,10 @@ if (! function_exists('versioned_asset')) {
 	 */
 	function versioned_asset($file)
 	{
-		return asset($file) . '?v=' . filemtime(public_path($file));
+		if ( file_exists(public_path($file)) ) {
+			return asset($file) . '?v=' . filemtime(public_path($file));
+		}
+		
+		return asset($file);
 	}
 }

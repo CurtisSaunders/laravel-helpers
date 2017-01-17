@@ -21,7 +21,7 @@ in `app/config/app.php`.
 
     'providers' => [
 
-      CurtisSaunders\LaravelHelpers\HelperServiceProvider::class
+      CurtisSaunders\LaravelHelpers\HelpersServiceProvider::class
               
     ];
     

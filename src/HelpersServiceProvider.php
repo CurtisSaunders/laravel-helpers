@@ -4,7 +4,7 @@ namespace CurtisSaunders\LaravelHelpers;
 
 use Illuminate\Support\ServiceProvider;
 
-class HelperServiceProvider extends ServiceProvider
+class HelpersServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.

@@ -19,7 +19,7 @@
 	"require-dev": {},
 	"autoload": {
 		"psr-4": {
-			"CurtisSaunders\\Laravel-Helpers\\": "src/"
+			"CurtisSaunders\\LaravelHelpers\\": "src/"
 		}
 	},
 	"extra": {

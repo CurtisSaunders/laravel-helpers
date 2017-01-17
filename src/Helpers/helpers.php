@@ -1,11 +1,12 @@
 <?php 
 
 if (! function_exists('versioned_asset')) {
-	/**
-	 * Returns file with version querystring on the end that updates every modification
-	 * @param  [type] $file [description]
-	 * @return [type]       [description]
-	 */
+    /**
+     * Returns file with version query string on the end that updates every modification
+     *
+     * @param $file
+     * @return string
+     */
 	function versioned_asset($file)
 	{
 		if ( file_exists(public_path($file)) ) {

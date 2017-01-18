@@ -49,7 +49,7 @@ outputs:
 
 *Example of concat_ws:*
 
-`{{ concat(' - ', 'John', 'Terry', 'Dave') }}`
+`{{ concat_ws(' - ', 'John', 'Terry', 'Dave') }}`
 
 outputs:
 

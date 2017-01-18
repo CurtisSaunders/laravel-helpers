@@ -16,3 +16,52 @@ if (! function_exists('versioned_asset')) {
 		return asset($file);
 	}
 }
+
+
+
+if (! function_exists('concat')) {
+    /**
+     * Concatinate strings together
+     *
+     * @return string
+     */
+    function concat()
+    {
+        $args = func_get_args();
+
+        if (! empty($args)) {
+            foreach($args as $key=>$arg) {
+                if (is_object($args) || is_array($arg)) {
+                    unset($args[$key]);
+                }
+            }
+        }
+
+        return implode(' ', $args);
+    }
+}
+
+if (! function_exists('concat_ws')) {
+    /**
+     * Concatinate strings with specified separator as first argument
+     *
+     * @return string
+     */
+    function concat_ws()
+    {
+        $args = func_get_args();
+
+        $separator = (isset($args[0])) ? $args[0] : ' ';
+        unset($args[0]);
+
+        if (! empty($args)) {
+            foreach($args as $key=>$arg) {
+                if (is_object($args) || is_array($arg)) {
+                    unset($args[$key]);
+                }
+            }
+        }
+
+        return implode($separator, $args);
+    }
+}

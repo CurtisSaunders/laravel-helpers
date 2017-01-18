@@ -27,11 +27,11 @@ in `app/config/app.php`.
     
 ## Available helpers
 
-* **versioned_asset** will apply a cache busting query string to your assets.
-* **concat** will concatenate strings together
-* **concat_ws** will concatenate strings together with the separator being defined as the first argument
+* [**versioned_asset**](#versionedAsset) will apply a cache busting query string to your assets.
+* [**concat**](#concat) will concatenate strings together
+* [**concat_ws**](#concat_ws) will concatenate strings together with the separator being defined as the first argument
 
-*Example of versioned_asset:*
+### <a name="versionedAsset"></a>***Example of versioned_asset:***
 
 `{{ versioned_asset('images/photo.png') }}`
 
@@ -39,7 +39,7 @@ outputs:
 
 `http://mysite.com/images/photo.png?v=392104829`
 
-*Example of concat:*
+### <a name="concat"></a>***Example of concat:***
 
 `{{ concat('John', 'Terry', 'Dave') }}`
 
@@ -47,7 +47,7 @@ outputs:
 
 `John Terry Dave`
 
-*Example of concat_ws:*
+### <a name="concat_ws"></a>***Example of concat_ws:***
 
 `{{ concat_ws(' - ', 'John', 'Terry', 'Dave') }}`
 

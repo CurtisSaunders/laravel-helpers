@@ -96,3 +96,16 @@ if (! function_exists('generate_uuid')) {
         }
     }
 }
+if ( ! function_exists('var_d'))
+{
+    /**
+     * var_dump(), but pretty printed like dd().
+     *
+     * @param  mixed
+     * @return void
+     */
+    function var_d()
+    {
+        array_map(function($x) { (new Illuminate\Support\Debug\Dumper)->dump($x); }, func_get_args());
+    }
+}

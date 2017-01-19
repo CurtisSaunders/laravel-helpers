@@ -65,3 +65,34 @@ if (! function_exists('concat_ws')) {
         return implode($separator, $args);
     }
 }
+
+if (! function_exists('generate_uuid')) {
+    /**
+     * Generate a valid RFC 4122 universally unique identifier. Supporting
+     * version 1, 3, 4 and 5,
+     *
+     * @param int $version The version of Uuid to generate. Accepts 1-5.
+     * @param string $name
+     * @return string
+     */
+    function generate_uuid($version = 1, $name = 'laravel')
+    {
+        switch($version) {
+            case 1:
+                return \Ramsey\Uuid\Uuid::uuid1()->toString();
+                break;
+            case 3:
+                return \Ramsey\Uuid\Uuid::uuid3(\Ramsey\Uuid\Uuid::NAMESPACE_DNS, $name)->toString();
+                break;
+            case 4:
+                return \Ramsey\Uuid\Uuid::uuid4()->toString();
+                break;
+            case 5:
+                return \Ramsey\Uuid\Uuid::uuid5(\Ramsey\Uuid\Uuid::NAMESPACE_DNS, $name)->toString();
+                break;
+            default:
+                return \Ramsey\Uuid\Uuid::uuid1()->toString();
+                break;
+        }
+    }
+}

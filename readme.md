@@ -30,6 +30,7 @@ in `app/config/app.php`.
 * [**versioned_asset**](#versionedAsset) will apply a cache busting query string to your assets.
 * [**concat**](#concat) will concatenate strings together
 * [**concat_ws**](#concat_ws) will concatenate strings together with the separator being defined as the first argument
+* [**generate_uuid**](#generate_uuid) will generate a valid RFC 4122 UUID
 
 ### <a name="versionedAsset"></a>***Example of versioned_asset:***
 
@@ -55,3 +56,29 @@ outputs:
 
 `John - Terry - Dave`
 
+## <a name="generate_uuid"></a>***Example of generate_uuid:***
+
+`{{ generate_uuid() }}`
+
+outputs:
+
+`e4eaaaf2-d142-11e1-b3e4-080027620cdd`
+
+When using the `generate_uuid` function, you are able to generate valid RFC 1, 3, 4 and 5 versions. In order to change
+the version, simply pass the version number you require as the first argument (defaults to 1). For example, to generate
+a version 4 Uuid, you can do the following:
+
+`{{ generate_uuid(4) }}`
+
+outputs:
+
+`25769c6c-d34d-4bfe-ba98-e0ee856f3e7a`
+
+For versions 3 and 5, you are also required to pass in a string as the second argument. This is hashed and used when
+generating the Uuid. For example:
+
+`{{ generate_uuid(3, 'php.net') }}`
+
+outputs:
+
+`11a38b9a-b3da-360f-9353-a5a725514269`

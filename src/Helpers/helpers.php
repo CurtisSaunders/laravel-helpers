@@ -21,7 +21,7 @@ if (! function_exists('versioned_asset')) {
 
 if (! function_exists('concat')) {
     /**
-     * Concatinate strings together
+     * Concatenate strings together
      *
      * @return string
      */
@@ -43,7 +43,7 @@ if (! function_exists('concat')) {
 
 if (! function_exists('concat_ws')) {
     /**
-     * Concatinate strings with specified separator as first argument
+     * Concatenate strings with specified separator as first argument
      *
      * @return string
      */

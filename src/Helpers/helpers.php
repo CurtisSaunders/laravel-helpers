@@ -21,7 +21,7 @@ if (! function_exists('versioned_asset')) {
 
 if (! function_exists('concat')) {
     /**
-     * Concatinate strings together
+     * Concatenate strings together
      *
      * @return string
      */
@@ -43,7 +43,7 @@ if (! function_exists('concat')) {
 
 if (! function_exists('concat_ws')) {
     /**
-     * Concatinate strings with specified separator as first argument
+     * Concatenate strings with specified separator as first argument
      *
      * @return string
      */
@@ -63,5 +63,34 @@ if (! function_exists('concat_ws')) {
         }
 
         return implode($separator, $args);
+    }
+}
+
+if (! function_exists('generate_uuid')) {
+    /**
+     * Generate a valid RFC 4122 universally unique identifier.
+     *
+     * @param int $version The version of Uuid to generate. Accepts 1-5.
+     * @return string
+     */
+    function generate_uuid($version = 1)
+    {
+        switch($version) {
+            case 1:
+                return \Ramsey\Uuid\Uuid::uuid1()->toString();
+                break;
+            case 2:
+                return \Ramsey\Uuid\Uuid::uuid2()->toString();
+                break;
+            case 3:
+                return \Ramsey\Uuid\Uuid::uuid3()->toString();
+                break;
+            case 4:
+                return \Ramsey\Uuid\Uuid::uuid4()->toString();
+                break;
+            case 5:
+                return \Ramsey\Uuid\Uuid::uuid5()->toString();
+                break;
+        }
     }
 }

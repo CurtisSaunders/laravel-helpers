@@ -30,6 +30,7 @@ in `app/config/app.php`.
 * [**versioned_asset**](#versionedAsset) will apply a cache busting query string to your assets.
 * [**concat**](#concat) will concatenate strings together
 * [**concat_ws**](#concat_ws) will concatenate strings together with the separator being defined as the first argument
+* [**generate_uuid**](#generate_uuid) will generate a valid RFC 4122 UUID
 
 ### <a name="versionedAsset"></a>***Example of versioned_asset:***
 

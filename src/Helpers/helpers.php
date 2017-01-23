@@ -109,3 +109,50 @@ if ( ! function_exists('var_d'))
         array_map(function($x) { (new Illuminate\Support\Debug\Dumper)->dump($x); }, func_get_args());
     }
 }
+
+
+if ( ! function_exists('db_dump')) {
+    /**
+     * Dump a backup of the specified db/tables
+     *
+     * @param string $tables
+     * @param null   $path
+     * @param null   $db
+     * @param null   $dbUser
+     * @param null   $dbPass
+     * @return null|string
+     * @throws \Exception
+     */
+    function db_dump($tables = '*', $path = null, $db = null, $dbUser = null, $dbPass = null)
+    {
+        if (empty($db)) {
+            $db = env('DB_DATABASE');
+        }
+        if (empty($dbUser)) {
+            $dbUser = env('DB_USERNAME');
+        }
+        if (empty($dbPass)) {
+            $dbPass = env('DB_PASSWORD');
+        }
+        if (empty($path)) {
+            $date = date('Ymd_H-i-s');
+            $path = storage_path("backups/$db" . "_$date.sql");
+        }
+        if (is_array($tables)) {
+            $tables = implode(" ", $tables);
+        }
+        if (empty($dbUser) || empty($dbPass) || empty($db) || empty($path) || empty($date)) {
+            throw new \Exception('DB credentials missing. Ensure you either pass correct strings or check .env has correct details');
+        }
+
+        $output = null;
+        $return = null;
+        exec("mysqldump --user=$dbUser --password=$dbPass $db $tables > $path", $output, $return);
+
+        if ($return) {
+            throw new \Exception('There was an error creating the backup - check the mysql logs');
+        }
+
+        return $path;
+    }
+}

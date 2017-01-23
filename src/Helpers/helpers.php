@@ -120,11 +120,18 @@ if ( ! function_exists('database_dump')) {
      * @param null   $db
      * @param null   $dbUser
      * @param null   $dbPass
+     * @param int    $port
      * @return null|string
      * @throws \Exception
      */
-    function database_dump($tables = '', $path = null, $db = null, $dbUser = null, $dbPass = null, $port = 3306)
-    {
+    private function database_dump(
+        $tables = '',
+        $path = null,
+        $db = null,
+        $dbUser = null,
+        $dbPass = null,
+        $port = 3306
+    ) {
         if (empty($db)) {
             $db = env('DB_DATABASE');
         }
@@ -141,13 +148,14 @@ if ( ! function_exists('database_dump')) {
         if (is_array($tables)) {
             $tables = implode(" ", $tables);
         }
-        if (empty($dbUser) || empty($dbPass) || empty($db) || empty($path) || empty($date) || empty($port)) {
+        if (empty($dbUser) || empty($dbPass) || empty($db) || empty($path) || empty($port)) {
             throw new \Exception('DB credentials missing. Ensure you either pass correct strings or check .env has correct details');
         }
 
         $output = null;
         $return = null;
-        exec("mysqldump --user=$dbUser --password=$dbPass --port=$port $db $tables > $path", $output, $return);
+        exec("mysqldump --user=$dbUser --password=$dbPass --port=$port $db $tables > $path", $output,
+            $return);
 
         if ($return) {
             throw new \Exception('There was an error creating the backup - check the mysql logs');

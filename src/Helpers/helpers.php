@@ -115,52 +115,64 @@ if ( ! function_exists('database_dump')) {
     /**
      * Dump a backup of the specified db/tables
      *
-     * @param string $tables
-     * @param null   $path
-     * @param null   $db
-     * @param null   $dbUser
-     * @param null   $dbPass
-     * @param int    $port
-     * @return null|string
-     * @throws \Exception
+     * @param string $tables      The tables to include array - leave blank for all
+     * @param array  $fileOptions The backup file options array (path, name, ext)
+     * @param array  $dbOptions   The database options array (db, user, pass, port)
+     * @param null   $limit       The number of files to trim the directory to after backup (oldest first)
+     * @return mixed|string Returns the path to the backup
+     * @throws Exception
      */
-    private function database_dump(
+    function database_dump(
         $tables = '',
-        $path = null,
-        $db = null,
-        $dbUser = null,
-        $dbPass = null,
-        $port = 3306
+        $fileOptions = [],
+        $dbOptions = [],
+        $limit = null
     ) {
-        if (empty($db)) {
-            $db = env('DB_DATABASE');
-        }
-        if (empty($dbUser)) {
-            $dbUser = env('DB_USERNAME');
-        }
-        if (empty($dbPass)) {
-            $dbPass = env('DB_PASSWORD');
-        }
-        if (empty($path)) {
-            $date = date('Ymd_H-i-s');
-            $path = storage_path("backups/$db" . "_$date.sql");
-        }
+        $db = ! empty($dbOptions['db']) ? $dbOptions['db'] : env('DB_DATABASE');
+        $user = ! empty($dbOptions['user']) ? $dbOptions['user'] : env('DB_USERNAME');
+        $pass = ! empty($dbOptions['pass']) ? $dbOptions['pass'] : env('DB_PASSWORD');
+        $port = ! empty($dbOptions['port']) ? $dbOptions['port'] : env('DB_PORT');
+
+        $path = ! empty($fileOptions['path']) ? preg_replace('/\/$/', '',
+            $fileOptions['path']) : storage_path("backups");
+        $ext = ! empty($fileOptions['ext']) ? $fileOptions['ext'] : 'sql';
+        $name = ! empty($fileOptions['name']) ? $fileOptions['name'] : ($db . "_" . date('Ymd_H-i-s') . "." . $ext);
+
         if (is_array($tables)) {
             $tables = implode(" ", $tables);
         }
-        if (empty($dbUser) || empty($dbPass) || empty($db) || empty($path) || empty($port)) {
+
+        if (empty($user) || empty($pass) || empty($db) || empty($path) || empty($port)) {
             throw new \Exception('DB credentials missing. Ensure you either pass correct strings or check .env has correct details');
         }
 
         $output = null;
         $return = null;
-        exec("mysqldump --user=$dbUser --password=$dbPass --port=$port $db $tables > $path", $output,
-            $return);
+        exec("mysqldump --user=$user --password=$pass --port=$port $db $tables > $path/$name.$ext",
+            $output, $return);
 
         if ($return) {
             throw new \Exception('There was an error creating the backup - check the mysql logs');
         }
 
-        return $path;
+        if (is_integer($limit)) {
+            $files = glob("$path/*." . $ext);
+
+            if (count($files) > $limit) {
+                array_multisort(
+                    array_map('filemtime', $files),
+                    SORT_NUMERIC,
+                    SORT_DESC,
+                    $files
+                );
+
+                foreach ($files as $key => $file) {
+                    if (($key + 1) > $limit) {
+                        unlink($file);
+                    }
+                }
+            }
+        }
+        return $path . '/' . $name . '.' . $ext;
     }
 }

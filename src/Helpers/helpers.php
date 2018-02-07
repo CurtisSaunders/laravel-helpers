@@ -178,6 +178,12 @@ if ( ! function_exists('database_dump')) {
 }
 
 if ( ! function_exists('routeIs')) {
+    /**
+     * Easier method to check the current route
+     *
+     * @param $string
+     * @return bool
+     */
     function routeIs($string)
     {
         return request()->route()->getName() == $string;

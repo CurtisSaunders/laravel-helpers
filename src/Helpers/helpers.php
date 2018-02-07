@@ -176,3 +176,10 @@ if ( ! function_exists('database_dump')) {
         return $path . '/' . $name . '.' . $ext;
     }
 }
+
+if ( ! function_exists('routeIs')) {
+    function routeIs($string)
+    {
+        return request()->route()->getName() == $string;
+    }
+}

@@ -190,3 +190,17 @@ if ( ! function_exists('routeIs')) {
         return $request->route()->getName() == $string;
     }
 }
+
+if ( ! function_exists('route_is')) {
+    /**
+     * Alternative to routeIs()
+     *
+     * @param                          $string
+     * @param \Illuminate\Http\Request $request
+     * @return bool
+     */
+    function route_is($string, Illuminate\Http\Request $request)
+    {
+        return routeIs($string);
+    }
+}

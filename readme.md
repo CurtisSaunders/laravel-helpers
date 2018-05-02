@@ -31,8 +31,9 @@ in `app/config/app.php`.
 * [**concat**](#concat) will concatenate strings together
 * [**concat_ws**](#concat_ws) will concatenate strings together with the separator being defined as the first argument
 * [**generate_uuid**](#generate_uuid) will generate a valid RFC 4122 UUID
+* [**routeIs/route_is**](#route_is) will check if the current route matches the route passed
 
-### <a name="versionedAsset"></a>***Example of versioned_asset:***
+### <a id="versionedAsset"></a>***Example of versioned_asset:***
 
 `{{ versioned_asset('images/photo.png') }}`
 
@@ -40,7 +41,7 @@ outputs:
 
 `http://mysite.com/images/photo.png?v=392104829`
 
-### <a name="concat"></a>***Example of concat:***
+### <a id="concat"></a>***Example of concat:***
 
 `{{ concat('John', 'Terry', 'Dave') }}`
 
@@ -48,7 +49,7 @@ outputs:
 
 `John Terry Dave`
 
-### <a name="concat_ws"></a>***Example of concat_ws:***
+### <a id="concat_ws"></a>***Example of concat_ws:***
 
 `{{ concat_ws(' - ', 'John', 'Terry', 'Dave') }}`
 
@@ -56,7 +57,7 @@ outputs:
 
 `John - Terry - Dave`
 
-## <a name="generate_uuid"></a>***Example of generate_uuid:***
+## <a id="generate_uuid"></a>***Example of generate_uuid:***
 
 `{{ generate_uuid() }}`
 
@@ -82,3 +83,23 @@ generating the Uuid. For example:
 outputs:
 
 `11a38b9a-b3da-360f-9353-a5a725514269`
+
+## <a id="route_is"></a>***Example of route_is() or routeIs():***
+
+```
+@if(routeIs('about.index'))
+// Do something
+@else
+// Do something else
+@endif
+```
+
+Alternatively
+
+```
+@if(route_is('about.index'))
+// Do something
+@else
+// Do something else
+@endif
+```

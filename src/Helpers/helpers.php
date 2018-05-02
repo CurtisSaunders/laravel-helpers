@@ -181,11 +181,12 @@ if ( ! function_exists('routeIs')) {
     /**
      * Easier method to check the current route
      *
-     * @param $string
+     * @param                          $string
+     * @param \Illuminate\Http\Request $request
      * @return bool
      */
-    function routeIs($string)
+    function routeIs($string, Illuminate\Http\Request $request)
     {
-        return request()->route()->getName() == $string;
+        return $request->route()->getName() == $string;
     }
 }

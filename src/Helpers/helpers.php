@@ -1,25 +1,24 @@
-<?php 
+<?php
 
-if (! function_exists('versioned_asset')) {
+if ( ! function_exists('versioned_asset')) {
     /**
      * Returns file with version query string on the end that updates every modification
      *
      * @param $file
      * @return string
      */
-	function versioned_asset($file)
-	{
-		if ( file_exists(public_path($file)) ) {
-			return asset($file) . '?v=' . filemtime(public_path($file));
-		}
-		
-		return asset($file);
-	}
+    function versioned_asset($file)
+    {
+        if (file_exists(public_path($file))) {
+            return asset($file) . '?v=' . filemtime(public_path($file));
+        }
+
+        return asset($file);
+    }
 }
 
 
-
-if (! function_exists('concat')) {
+if ( ! function_exists('concat')) {
     /**
      * Concatenate strings together
      *
@@ -29,8 +28,8 @@ if (! function_exists('concat')) {
     {
         $args = func_get_args();
 
-        if (! empty($args)) {
-            foreach($args as $key=>$arg) {
+        if ( ! empty($args)) {
+            foreach ($args as $key => $arg) {
                 if (is_object($args) || is_array($arg)) {
                     unset($args[$key]);
                 }
@@ -41,7 +40,7 @@ if (! function_exists('concat')) {
     }
 }
 
-if (! function_exists('concat_ws')) {
+if ( ! function_exists('concat_ws')) {
     /**
      * Concatenate strings with specified separator as first argument
      *
@@ -54,8 +53,8 @@ if (! function_exists('concat_ws')) {
         $separator = (isset($args[0])) ? $args[0] : ' ';
         unset($args[0]);
 
-        if (! empty($args)) {
-            foreach($args as $key=>$arg) {
+        if ( ! empty($args)) {
+            foreach ($args as $key => $arg) {
                 if (is_object($args) || is_array($arg)) {
                     unset($args[$key]);
                 }
@@ -66,18 +65,18 @@ if (! function_exists('concat_ws')) {
     }
 }
 
-if (! function_exists('generate_uuid')) {
+if ( ! function_exists('generate_uuid')) {
     /**
      * Generate a valid RFC 4122 universally unique identifier. Supporting
      * version 1, 3, 4 and 5,
      *
-     * @param int $version The version of Uuid to generate. Accepts 1-5.
+     * @param int    $version The version of Uuid to generate. Accepts 1-5.
      * @param string $name
      * @return string
      */
     function generate_uuid($version = 1, $name = 'laravel')
     {
-        switch($version) {
+        switch ($version) {
             case 1:
                 return \Ramsey\Uuid\Uuid::uuid1()->toString();
                 break;
@@ -96,8 +95,7 @@ if (! function_exists('generate_uuid')) {
         }
     }
 }
-if ( ! function_exists('var_d'))
-{
+if ( ! function_exists('var_d')) {
     /**
      * var_dump(), but pretty printed like dd().
      *
@@ -106,7 +104,9 @@ if ( ! function_exists('var_d'))
      */
     function var_d()
     {
-        array_map(function($x) { (new Illuminate\Support\Debug\Dumper)->dump($x); }, func_get_args());
+        array_map(function ($x) {
+            (new Illuminate\Support\Debug\Dumper)->dump($x);
+        }, func_get_args());
     }
 }
 
@@ -182,11 +182,12 @@ if ( ! function_exists('routeIs')) {
      * Easier method to check the current route
      *
      * @param                          $string
-     * @param \Illuminate\Http\Request $request
      * @return bool
      */
-    function routeIs($string, Illuminate\Http\Request $request)
+    function routeIs($string)
     {
+        $request = app('Illuminate\Http\Request');
+
         return $request->route()->getName() == $string;
     }
 }
@@ -195,11 +196,10 @@ if ( ! function_exists('route_is')) {
     /**
      * Alternative to routeIs()
      *
-     * @param                          $string
-     * @param \Illuminate\Http\Request $request
+     * @param  $string
      * @return bool
      */
-    function route_is($string, Illuminate\Http\Request $request)
+    function route_is($string)
     {
         return routeIs($string);
     }

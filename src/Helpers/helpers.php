@@ -188,7 +188,10 @@ if ( ! function_exists('routeIs')) {
     {
         $request = app('Illuminate\Http\Request');
 
-        return $request->route()->getName() == $string;
+        if($request->route()) {
+            return $request->route()->getName() == $string;
+        }
+        return null;
     }
 }
 

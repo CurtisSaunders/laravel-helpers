@@ -1,10 +1,10 @@
-#Laravel Helpers
+# Laravel Helpers
 [![Latest Stable Version](https://poser.pugx.org/curtissaunders/laravel-helpers/version)](https://packagist.org/packages/curtissaunders/laravel-helpers) 
 [![Total Downloads](https://poser.pugx.org/curtissaunders/laravel-helpers/downloads)](https://packagist.org/packages/curtissaunders/laravel-helpers) 
 [![Latest Unstable Version](https://poser.pugx.org/curtissaunders/laravel-helpers/v/unstable)](https://packagist.org/packages/curtissaunders/laravel-helpers) 
 [![License](https://poser.pugx.org/curtissaunders/laravel-helpers/license.svg)](https://packagist.org/packages/curtissaunders/laravel-helpers)
 
-#Installation
+# Installation
 
 This package requires PHP 5.6+, and includes a Laravel 5 Service Provider.
 
@@ -14,7 +14,7 @@ To install through composer include the package in your `composer.json`.
 
 Run `composer install` or `composer update` to download the dependencies or you can run `composer require curtissaunders/laravel-helpers`.
 
-##Laravel 5 Integration
+## Laravel 5 Integration
 
 To use the package with Laravel 5, add the Helper Service Provider to the list of service providers 
 in `app/config/app.php`.

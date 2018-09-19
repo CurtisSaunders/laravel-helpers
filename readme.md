@@ -31,7 +31,7 @@ in `app/config/app.php`.
 * [**concat**](#concat) will concatenate strings together
 * [**concat_ws**](#concat_ws) will concatenate strings together with the separator being defined as the first argument
 * [**generate_uuid**](#generate_uuid) will generate a valid RFC 4122 UUID
-* [**routeIs/route_is**](#route_is) will check if the current route matches the route passed
+* [**route_is/routeIs**](#route_is) will check if the current route matches the route passed
 
 ### <a id="versionedAsset"></a>***Example of versioned_asset:***
 
@@ -87,7 +87,7 @@ outputs:
 ## <a id="route_is"></a>***Example of route_is() or routeIs():***
 
 ```
-@if(routeIs('about.index'))
+@if(route_is('about.index'))
 // Do something
 @else
 // Do something else
@@ -97,7 +97,7 @@ outputs:
 Alternatively
 
 ```
-@if(route_is('about.index'))
+@if(routeIs('about.index'))
 // Do something
 @else
 // Do something else

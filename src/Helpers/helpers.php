@@ -177,14 +177,14 @@ if ( ! function_exists('database_dump')) {
     }
 }
 
-if ( ! function_exists('routeIs')) {
+if ( ! function_exists('route_is')) {
     /**
      * Easier method to check the current route
      *
      * @param                          $string
      * @return bool
      */
-    function routeIs($string)
+    function route_is($string)
     {
         $request = app('Illuminate\Http\Request');
 
@@ -195,15 +195,15 @@ if ( ! function_exists('routeIs')) {
     }
 }
 
-if ( ! function_exists('route_is')) {
+if ( ! function_exists('routeIs')) {
     /**
-     * Alternative to routeIs()
+     * Alternative to route_is()
      *
      * @param  $string
      * @return bool
      */
-    function route_is($string)
+    function routeIs($string)
     {
-        return routeIs($string);
+        return route_is($string);
     }
 }

@@ -179,19 +179,46 @@ if ( ! function_exists('database_dump')) {
 
 if ( ! function_exists('route_is')) {
     /**
-     * Easier method to check the current route
+     * Check the current route equals what is passed, including specific parameters
      *
-     * @param                          $string
+     * @param      $string
+     * @param null $parameters
      * @return bool
      */
-    function route_is($string)
+    function route_is($string, $parameters = null)
     {
         $request = app('Illuminate\Http\Request');
 
-        if($request->route()) {
-            return $request->route()->getName() == $string;
+        if ($request->route()) {
+            // If the route is not the same as the one we want, return false
+            if ($request->route()->getName() != $string) {
+                return false;
+            }
+
+            // If the route is the same (cause we got past the first check) and we are not checking for parameters
+            if ($parameters == null) {
+                return true;
+            }
+
+            // If we got here then we are checking for parameters then do that...
+            $routeParameters = $request->route()->parameters();
+            foreach ($parameters as $key => $value) {
+                // If the key is not in the route parameters then return false as it has not matched what we want
+                if ( ! array_key_exists($key, $routeParameters)) {
+                    return false;
+                }
+
+                // If the route parameter value is not the same as the one we want to match return false
+                if ($routeParameters[$key] != $value) {
+                    return false;
+                }
+            }
+
+            // If all has passed our checks then return true
+            return true;
         }
-        return null;
+
+        return false;
     }
 }
 
@@ -202,8 +229,53 @@ if ( ! function_exists('routeIs')) {
      * @param  $string
      * @return bool
      */
-    function routeIs($string)
+    function routeIs($string, $parameters = null)
     {
-        return route_is($string);
+        return route_is($string, $parameters);
+    }
+}
+
+if ( ! function_exists('query_log_to_sql')) {
+    /**
+     * Transforms a database query log into raw sql for easy sql logging
+     *
+     * @param $queryLog
+     * @return array
+     */
+    function query_log_to_sql($queryLog)
+    {
+        if (empty($queryLog)) {
+            return [];
+        }
+
+        $queries = [];
+        foreach ($queryLog as $queryData) {
+            $queries[] = combine_query($queryData['query'], $queryData['bindings']);
+        }
+
+        return $queries;
+    }
+}
+if ( ! function_exists('combine_query')) {
+    /**
+     * Merge database query with its bindings
+     *
+     * @param $query
+     * @param $bindings
+     * @return array
+     */
+    function combine_query($query, $bindings)
+    {
+        $sql = preg_replace_callback('/(:([0-9a-z_]+)|(\?))/', function($value) use (&$bindings) {
+            $data = array_shift($bindings);
+
+            if ( ! is_int($data)) {
+                return "'$data'";
+            }
+
+            return $data;
+        }, $query);
+
+        return $sql;
     }
 }

@@ -32,6 +32,8 @@ in `app/config/app.php`.
 * [**concat_ws**](#concat_ws) will concatenate strings together with the separator being defined as the first argument
 * [**generate_uuid**](#generate_uuid) will generate a valid RFC 4122 UUID
 * [**route_is/routeIs**](#route_is) will check if the current route matches the route passed
+* [**query_log_to_sql**](#query_log_to_sql) will allow you to log a database query to a variable and dump it out for easy debugging
+* [**combine_query**](#combine_query) will combine a query with its bindings
 
 ### <a id="versionedAsset"></a>***Example of versioned_asset:***
 
@@ -86,6 +88,8 @@ outputs:
 
 ## <a id="route_is"></a>***Example of route_is() or routeIs():***
 
+*Examples shown in Laravel Blade*
+
 ```
 @if(route_is('about.index'))
 // Do something
@@ -102,4 +106,42 @@ Alternatively
 @else
 // Do something else
 @endif
+```
+
+You can also check for specific parameters by passing them in an array as the second argument. For example, you may want to check that you're on a specific product category to apply an "active" class to a link. Consider the below when looping through category links:
+```
+@foreach($categories as $category)
+    <a href="{{ route('product.category', [$category->slug]) }}" class="{{ route_is('product.category', ['categorySlug' => $category->slug]) ? 'active' : '' }}">
+        {{ $category->name }}    
+    </a>
+@endforeach
+```
+The above would apply a class of "active" when you're on the corresponding page to that link.
+
+## <a id="query_log_to_sql"></a>***Example of query_log_to_sql:***
+
+```
+// Enable laravel's query log
+DB::connection()->enableQueryLog();
+ 
+... // Do database transactions ...
+ 
+// Get all the queries ran since the query log was enabled
+$queryLog = DB::getQueryLog();
+ 
+// Combine the query logs ran with their bindings into the sql that was ran
+$sqlQueries = query_log_to_sql($queryLog);
+ 
+// Returns an array of all the sql queries ran with their bindings in place, useful for quick debugging
+dd($sqlQueries);
+```
+
+## <a id="combine_query"></a>***Example of combine_query:***
+
+```
+// Create a query using Eloquent
+$eloquentQuery = UserModel::where('email', '=', 'user.name@example.com');
+ 
+// Combine the Eloquent query sql and bindings into a query you can run in mysql
+$sqlQuery = combine_query($eloquentQuery->toSql(), $eloquentQuery->getBindings());
 ```
